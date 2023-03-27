@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CounterState } from "../counter/counterSlice";
+import { RootState } from "../../app/store";
 
 import constants from "../../constants/constants";
+import calculateResults from "./helper/calculate";
 
 export interface Item {
     inches: number;
@@ -66,3 +67,19 @@ const initialState: CalculatorState = {
         }
     }
 }
+
+export const calculatorSlice = createSlice({
+   name: 'calculator',
+   initialState,
+   reducers:{
+    calculateStateResults: (state, action: PayloadAction<CalculatorState>) => {
+        state.results = calculateResults(action.payload);
+    }
+   } 
+})
+
+export const {calculateStateResults} = calculatorSlice.actions;
+
+export const selectCalculate = (state: RootState) => state.calculator;
+
+export default calculatorSlice.reducer;

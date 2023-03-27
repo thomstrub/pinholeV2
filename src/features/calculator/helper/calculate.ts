@@ -1,7 +1,7 @@
 import constants from "../../../constants/constants"
 import {Item, CalculatorState, Inputs, Results} from "../calculatorSlice"
 
-export default function calculateResults(calculatorState: CalculatorState){
+export default function calculateResults(calculatorState: CalculatorState): Results{
 
     const inputs: Inputs = calculatorState.inputs;
 
@@ -45,26 +45,27 @@ export default function calculateResults(calculatorState: CalculatorState){
         return optimalFocalLengthFromMm ? Number(optimalFocalLengthFromMm.toFixed(2)) : 0
     }
 
-    // to do - refactor for TS
     return {
-        [constants.results.fstop.variable as keyof Results]: inputs.diameter.millimeters && inputs.focalLength.millimeters ? String(calculateFStopFromMm(inputs.diameter, inputs.focalLength)) : '',
-        [constants.results.angleOfView.variable as keyof Results]: inputs.filmDimension[millimeters] && inputs.focalLength[millimeters] ? calculateAngleOfViewFromMm(inputs.filmDimension, inputs.focalLength) : '',
-        [constants.results.imageDiameter.variable as keyof Results]: {
-            [millimeters]: calculateImageDiameterFromMm(inputs.focalLength) ? calculateImageDiameterFromMm(inputs.focalLength): '',
-            [inches]: calculateImageDiameterFromMm(inputs.focalLength) ? (calculateImageDiameterFromMm(inputs.focalLength) * constants.units.inches.multiplier).toFixed(2) : '',
+        fStop: inputs.diameter.millimeters && inputs.focalLength.millimeters ? String(calculateFStopFromMm(inputs.diameter, inputs.focalLength)) : '',
+        angleOfView: inputs.filmDimension[millimeters] && inputs.focalLength[millimeters] ? calculateAngleOfViewFromMm(inputs.filmDimension, inputs.focalLength) : '',
+        imageDiameter: {
+            inches: calculateImageDiameterFromMm(inputs.focalLength) ? Number((calculateImageDiameterFromMm(inputs.focalLength) * constants.units.inches.multiplier).toFixed(2)) : 0,
+            millimeters: calculateImageDiameterFromMm(inputs.focalLength) ? calculateImageDiameterFromMm(inputs.focalLength): 0,
             unit : calculatorState.results.imageDiameter.unit
         },
-        [constants.results.optimalPinholeDiameter.variable as keyof Results]: {
-            [millimeters]: calculateOptimalPinholeDiameterFromMm(inputs.focalLength) ? calculateOptimalPinholeDiameterFromMm(inputs.focalLength): '',
-            [inches]: calculateOptimalPinholeDiameterFromMm(inputs.focalLength) ? (calculateOptimalPinholeDiameterFromMm(inputs.focalLength) * constants.units.inches.multiplier).toFixed(2) : '',
+        optimalPinholeDiameter: {
+            millimeters: calculateOptimalPinholeDiameterFromMm(inputs.focalLength) ? calculateOptimalPinholeDiameterFromMm(inputs.focalLength): 0,
+            inches: calculateOptimalPinholeDiameterFromMm(inputs.focalLength) ? Number((calculateOptimalPinholeDiameterFromMm(inputs.focalLength) * constants.units.inches.multiplier).toFixed(2)) : 0,
             unit : calculatorState.results.optimalPinholeDiameter.unit
         },
-        [constants.results.optimalFocalLength.variable as keyof Results]: {
-            [millimeters]: calculateOptimalFocalLengthFromMm(inputs.diameter) ? calculateOptimalFocalLengthFromMm(inputs.diameter): '',
-            [inches]: calculateOptimalFocalLengthFromMm(inputs.diameter) ? (calculateOptimalFocalLengthFromMm(inputs.diameter) * constants.units.inches.multiplier).toFixed(2) : '',
+        optimalFocalLength: {
+            millimeters: calculateOptimalFocalLengthFromMm(inputs.diameter) ? calculateOptimalFocalLengthFromMm(inputs.diameter): 0,
+            inches: calculateOptimalFocalLengthFromMm(inputs.diameter) ? Number((calculateOptimalFocalLengthFromMm(inputs.diameter) * constants.units.inches.multiplier).toFixed(2)) : 0,
             unit : calculatorState.results.optimalFocalLength.unit
         }
 
        
     }
+
+    
 }
