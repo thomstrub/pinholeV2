@@ -5,8 +5,7 @@ import constants from "../../constants/constants";
 import calculateResults from "./helper/calculate";
 
 export interface Item {
-    inches: number;
-    millimeters: number;
+    value: number;
     unit: string;
 }
 
@@ -32,18 +31,15 @@ export interface CalculatorState {
 const initialState: CalculatorState = {
     inputs: {
         focalLength: {
-            inches: 0,
-            millimeters: 0,
+            value: 0,
             unit: constants.units.inches.variable
         },
         diameter: {
-            inches: 0,
-            millimeters: 0,
+            value: 0,
             unit: constants.units.millimeters.variable
         },
         filmDimension: {
-            inches: 0,
-            millimeters: 0,
+            value: 0,
             unit: constants.units.inches.variable
         },
     },
@@ -51,18 +47,15 @@ const initialState: CalculatorState = {
         fStop: '',
         angleOfView: '',
         imageDiameter: {
-            inches: 0,
-            millimeters: 0,
+            value: 0,
             unit: constants.units.inches.variable
         },
         optimalPinholeDiameter: {
-            inches: 0,
-            millimeters: 0,
+            value: 0,
             unit: constants.units.millimeters.variable
         },
         optimalFocalLength: {
-            inches: 0,
-            millimeters: 0,
+            value: 0,
             unit: constants.units.inches.variable
         }
     }

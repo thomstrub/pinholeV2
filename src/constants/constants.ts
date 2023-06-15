@@ -1,5 +1,5 @@
 
-interface Item {
+export interface ConstantsItem {
     variable: string
     readibleName: string;
 }
@@ -12,10 +12,10 @@ interface Unit {
 
 export interface Constants {
     inputs: {
-        [key: string]: Item
+        [key: string]: ConstantsItem
     };
     results: {
-        [key: string]: Item
+        [key: string]: ConstantsItem
     };
     units: {
         [key: string]: Unit
