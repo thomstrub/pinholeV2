@@ -12,11 +12,11 @@ import {
     Results
   } from '../../calculatorSlice';
 
-type ResultMiniProps = {
+type ResultProps = {
     name: ConstantsItem;
 }
 
-export default function Result({name}: ResultMiniProps){
+export default function Result({name}: ResultProps){
     // const resultInUnit = result[result.unit]
     
     const calculatorState = useAppSelector(selectCalculate) as CalculatorState;
