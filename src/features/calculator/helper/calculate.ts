@@ -1,8 +1,26 @@
-import {Item, CalculatorState, Inputs, Results} from "../calculatorSlice"
+import {calculateStateResults, selectCalculate,Item, CalculatorState, Inputs, Results} from "../calculatorSlice"
+import { useAppSelector, useAppDispatch } from '../../../app/hooks';
+import constants from "../../../constants/constants";
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import type { RootState, AppDispatch } from "../../../app/store";
 
-export default function calculateResults(calculatorState: CalculatorState): Results{
+export function updateInputState(updatedElemId: keyof Inputs, updatedValue: number, currentState: CalculatorState): CalculatorState {
+    let newState: CalculatorState = {
+        ...currentState,
+        inputs: {
+            ...currentState.inputs,
+            [updatedElemId]: {
+                value: updatedValue,
+                unit: constants.units.millimeters.variable
+            }
+        }
+    }
+    return newState;
+}
 
-    const inputs: Inputs = calculatorState.inputs;
+export function calculateResults(updatedCalculatorState: CalculatorState): CalculatorState{
+
+    const inputs: Inputs = updatedCalculatorState.inputs;
 
     // units are for indexing into different calculator Items, or values
     const value = "value" as keyof Item;
@@ -43,20 +61,27 @@ export default function calculateResults(calculatorState: CalculatorState): Resu
     }
 
     return {
-        fStop: inputs.diameter.value && inputs.focalLength.value ? String(calculateFStopFromMm(inputs.diameter, inputs.focalLength)) : '',
-        angleOfView: inputs.filmDimension[value] && inputs.focalLength[value] ? calculateAngleOfViewFromMm(inputs.filmDimension, inputs.focalLength) : '',
-        imageDiameter: {
+        inputs: {
+            ...updatedCalculatorState.inputs
+        },
+        results: {
+            fStop: inputs.diameter.value && inputs.focalLength.value ? calculateFStopFromMm(inputs.diameter, inputs.focalLength) : '',
+            angleOfView: inputs.filmDimension[value] && inputs.focalLength[value] ? calculateAngleOfViewFromMm(inputs.filmDimension, inputs.focalLength) : '',
+            imageDiameter: {
             value: calculateImageDiameterFromMm(inputs.focalLength) ? calculateImageDiameterFromMm(inputs.focalLength): 0,
-            unit : calculatorState.results.imageDiameter.unit
-        },
-        optimalPinholeDiameter: {
-            value: calculateOptimalPinholeDiameterFromMm(inputs.focalLength) ? calculateOptimalPinholeDiameterFromMm(inputs.focalLength): 0,
-            unit : calculatorState.results.optimalPinholeDiameter.unit
-        },
-        optimalFocalLength: {
-            value: calculateOptimalFocalLengthFromMm(inputs.diameter) ? calculateOptimalFocalLengthFromMm(inputs.diameter): 0,
-            unit : calculatorState.results.optimalFocalLength.unit
+            unit : updatedCalculatorState.results.imageDiameter.unit
+            },
+            optimalPinholeDiameter: {
+                value: calculateOptimalPinholeDiameterFromMm(inputs.focalLength) ? calculateOptimalPinholeDiameterFromMm(inputs.focalLength): 0,
+                unit : updatedCalculatorState.results.optimalPinholeDiameter.unit
+            },
+            optimalFocalLength: {
+                value: calculateOptimalFocalLengthFromMm(inputs.diameter) ? calculateOptimalFocalLengthFromMm(inputs.diameter): 0,
+                unit : updatedCalculatorState.results.optimalFocalLength.unit
+            }
+
         }
+        
 
        
     }

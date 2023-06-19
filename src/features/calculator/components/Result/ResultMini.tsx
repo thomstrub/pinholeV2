@@ -18,7 +18,8 @@ export default function ResultsMini({name}: ResultMiniProps){
 
     const calculatorState = useAppSelector(selectCalculate) as CalculatorState;
 
-    const resultValue = calculatorState.results[name.variable as keyof Results] as Item;
+    const resultValue = calculatorState.results[name.variable as keyof Results] as string;
+    console.log(resultValue, " <--- resultValue")
 
     return(
         
@@ -29,7 +30,9 @@ export default function ResultsMini({name}: ResultMiniProps){
                 </Row>
                 <Row style={{marginTop: "4px"}}>
                     <Col>
-                        <input style={resultsMiniStyles} id={name.variable} value={resultValue.value} readOnly={true}></input>
+
+                        <input style={resultsMiniStyles} id={name.variable} value={resultValue ? resultValue : "NO"} readOnly={true}></input>
+                        <p>Hello:{resultValue}</p>
                     </Col>
                 </Row>
             </Col>

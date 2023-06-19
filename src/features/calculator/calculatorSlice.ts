@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 import constants from "../../constants/constants";
-import calculateResults from "./helper/calculate";
+import {calculateResults, updateInputState} from "./helper/calculate";
 
 export interface Item {
     value: number;
@@ -26,6 +26,12 @@ export interface Inputs {
 export interface CalculatorState {
     inputs: Inputs;
     results: Results;
+}
+
+export interface CalculatorPayload {
+    updatedElemId: keyof Inputs;
+    updatedValue: number;
+    calculatorState: CalculatorState;
 }
 
 const initialState: CalculatorState = {
@@ -61,12 +67,31 @@ const initialState: CalculatorState = {
     }
 }
 
+// 6/16/23 Tyler - shouldn't take in state- should take in values and handle the state
+// keep state controlled by redux - 6/19 Different approach using hooks
+
+export function calculateAction(calculatorPayload: CalculatorPayload): CalculatorState{
+
+// first update in the input values based on the changed element
+const updatedInputState: CalculatorState = updateInputState(calculatorPayload.updatedElemId, calculatorPayload.updatedValue, calculatorPayload.calculatorState);
+
+// use these new values to update the state using the Redux hooks
+// in order to leverage redux hooks, you have to access the state from the functional component
+const newResults: CalculatorState = calculateResults(updatedInputState);
+
+return newResults;
+
+}
+
+
 export const calculatorSlice = createSlice({
    name: 'calculator',
    initialState,
    reducers:{
-    calculateStateResults: (state, action: PayloadAction<CalculatorState>) => {
-        state.results = calculateResults(action.payload);
+    calculateStateResults: (state, action: PayloadAction<CalculatorPayload>) => {
+        // have to return something
+        return calculateAction(action.payload);
+
     }
    } 
 })

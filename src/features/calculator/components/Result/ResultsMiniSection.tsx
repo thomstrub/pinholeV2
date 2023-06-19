@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import constants, { ConstantsItem } from "../../../../constants/constants";
 import ResultsMini from "./ResultMini";
 
+
 export default function ResultsMiniSection(){
 
     return(

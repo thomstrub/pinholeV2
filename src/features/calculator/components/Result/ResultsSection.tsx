@@ -1,5 +1,5 @@
 import React from "react";
-import Result from "./result";
+import Result from "./Result";
 import constants from "../../../../constants/constants";
 
 

@@ -7,6 +7,8 @@ import {
 } from './calculatorSlice';
 import styles from './Counter.module.css';
 import InputSection from './components/Input/InputSection';
+import ResultsMiniSection from './components/Result/ResultsMiniSection';
+import ResultsSection from './components/Result/ResultsSection';
 
 export function Calculator() {
   const calculator = useAppSelector(selectCalculate);
@@ -25,8 +27,8 @@ export function Calculator() {
           <InputSection />
           {/* <div style={{width: "100%", height: "4px", background: "#D9D9D9"}}></div>
           <h3 style={{marginTop: "24px", fontSize: "20px", fontWeight: "700", lineHeight: "23px"}}>Results</h3> */}
-          <ResultsMiniSection fStop={state.results.fStop} angleOfView={state.results.angleOfView}/>
-          <ResultsSection results={state.results} handleUnitToggle={handleUnitToggle}/>
+          <ResultsMiniSection />
+          <ResultsSection />
       </Container>
   </div>
 </main>
