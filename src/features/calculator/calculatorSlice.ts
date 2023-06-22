@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
-import constants from "../../constants/constants";
-import {calculateResults, updateInputState} from "./helper/calculate";
+import {constants} from "../../constants/constants";
+import {calculateResults, updateInputState, updateUnitState} from "./helper/calculate";
 
 export interface Item {
     value: number;
@@ -31,6 +31,12 @@ export interface CalculatorState {
 export interface CalculatorPayload {
     updatedElemId: keyof Inputs;
     updatedValue: number;
+    calculatorState: CalculatorState;
+}
+
+export interface UnitPayload {
+    type: keyof CalculatorState;
+    updatedElemId: keyof Inputs;
     calculatorState: CalculatorState;
 }
 
@@ -83,6 +89,10 @@ return newResults;
 
 }
 
+export function unitAction(unitPayload: UnitPayload): CalculatorState {
+    return updateUnitState(unitPayload.type, unitPayload.updatedElemId, unitPayload.calculatorState);
+}
+
 
 export const calculatorSlice = createSlice({
    name: 'calculator',
@@ -92,11 +102,14 @@ export const calculatorSlice = createSlice({
         // have to return something
         return calculateAction(action.payload);
 
+    },
+    toggleUnit: (state, action: PayloadAction<UnitPayload>) => {
+        return unitAction(action.payload);
     }
    } 
 })
 
-export const {calculateStateResults} = calculatorSlice.actions;
+export const {calculateStateResults, toggleUnit} = calculatorSlice.actions;
 
 export const selectCalculate = (state: RootState) => state.calculator;
 

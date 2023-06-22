@@ -31,7 +31,7 @@ export default function ResultsMini({name}: ResultMiniProps){
                 <Row style={{marginTop: "4px"}}>
                     <Col>
 
-                        <input style={resultsMiniStyles} id={name.variable} value={resultValue ? resultValue : "NO"} readOnly={true}></input>
+                        <input style={resultsMiniStyles} id={name.variable} value={resultValue} readOnly={true}></input>
                         <p>Hello:{resultValue}</p>
                     </Col>
                 </Row>

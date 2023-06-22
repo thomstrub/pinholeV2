@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-// import ToggleContainer from "../toggles/toggleContainer";
+import ToggleContainer from "../toggles/ToggleContainer";
 import { resultsStyles, labelStyles, rowStyles } from "../../../../styles/inputAndResultsStyles";
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import { ConstantsItem } from "../../../../constants/constants";
@@ -33,8 +33,8 @@ export default function Result({name}: ResultProps){
         </Row>
         <Row style={{marginTop: "4px"}}>
             <div style={{display: "flex", justifyContent: "space-between", width:"100%", margin: "0 auto"}}>
-                <input style={resultsStyles} id={name.variable} value={resultValue.value} readOnly={true}></input>
-                {/* <ToggleContainer unit={result.unit} handleUnitToggle={handleUnitToggle} type={"results"} label={name.variable}/> */}
+                <input style={resultsStyles} id={name.variable} value={resultValue.value > .0001 ? resultValue.value : ''} readOnly={true}></input>
+                <ToggleContainer unit={resultValue.unit} type={"results"} updatedElemId={name.variable}/>
             </div> 
         </Row>
             </Col>

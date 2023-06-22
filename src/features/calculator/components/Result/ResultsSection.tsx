@@ -1,6 +1,7 @@
 import React from "react";
+
+import {constants} from "../../../../constants/constants";
 import Result from "./Result";
-import constants from "../../../../constants/constants";
 
 
 export default function ResultsSection(){

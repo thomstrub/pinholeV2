@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
   calculateStateResults,
@@ -11,11 +11,6 @@ import ResultsMiniSection from './components/Result/ResultsMiniSection';
 import ResultsSection from './components/Result/ResultsSection';
 
 export function Calculator() {
-  const calculator = useAppSelector(selectCalculate);
-  const dispatch = useAppDispatch();
-  // const [incrementAmount, setIncrementAmount] = useState('2');
-
-//   const incrementValue = Number(incrementAmount) || 0;
 
   return (
   <main >

@@ -1,6 +1,7 @@
+import { Inputs } from "../features/calculator/calculatorSlice";
 
 export interface ConstantsItem {
-    variable: string
+    variable: string | keyof Inputs
     readibleName: string;
 }
 
@@ -10,7 +11,7 @@ interface Unit {
     multiplier: number;
 }
 
-export interface Constants {
+export interface ConstantsInterface {
     inputs: {
         [key: string]: ConstantsItem
     };
@@ -21,18 +22,18 @@ export interface Constants {
         [key: string]: Unit
     }
 }
-const constants: Constants = {
+export const constants: ConstantsInterface = {
     inputs: {
         focalLength: {
-            variable: 'focalLength',
+            variable: 'focalLength' as keyof Inputs,
             readibleName: "Focal Length"
         },
         diameter: {
-            variable: 'diameter',
+            variable: 'diameter' as keyof Inputs,
             readibleName: "Pinhole Diameter"
         },
         filmDimension: {
-            variable: 'filmDimension',
+            variable: 'filmDimension' as keyof Inputs,
             readibleName: 'Film Dimension'
         }
     },
@@ -72,5 +73,3 @@ const constants: Constants = {
     }
     
 }
-
-export default constants;

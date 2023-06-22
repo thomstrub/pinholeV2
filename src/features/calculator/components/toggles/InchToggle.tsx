@@ -1,19 +1,24 @@
 import React from "react";
-export default function InchToggle({colorStyles}){
+import { ColorStyles } from "./ToggleContainer";
+
+type InchProps = {
+    colorStyles: ColorStyles
+}
+
+export default function InchToggle({colorStyles}: InchProps){
     
     const inchToggleStyles = {
         ...colorStyles,
         borderRadius: "6px 0px 0px 6px",
-        height: "60px",
+        height: "20px",
         width: "60px",
         padding: "20px",
         fontSize: "16px",
         fontWeight: "500",
-        lineHeight: "20px",
         display: "flex",
         alignItems: "center",
-        textAlign: "center",
-        justifyContent: "center"
+        textAlign: "center" as "center" | undefined,
+        justifyContent: "center",
     }
     return(
         <>
