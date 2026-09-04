@@ -2,7 +2,7 @@ import React, { FormEvent } from "react";
 import { Row, Col } from "react-bootstrap";
 import ToggleContainer from "../toggles/ToggleContainer";
 import { ConstantsItem, constants } from "../../../../constants/constants";
-import { inputsStyles, labelStyles, rowStyles } from "../../../../styles/inputAndResultsStyles";
+import { inputsStyles, labelStyles, rowStyles } from "../../styles/inputAndResultsStyles";
 
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import {
@@ -11,6 +11,7 @@ import {
     Inputs,
     CalculatorPayload
   } from '../../calculatorSlice';
+  
 
 type InputProps = {
     name: ConstantsItem;
@@ -24,14 +25,16 @@ export default function Input({name}: InputProps){
 
     const input = calculatorState.inputs[name.variable as keyof Inputs];
 
-    function newHandleChange(e:FormEvent){
+    function handleChange(e:FormEvent){
         const target = e.target as HTMLInputElement;
         const updatedElemId = target.id as keyof Inputs;
         let updatedValue!: number;
         if(calculatorState.inputs[name.variable as keyof Inputs].unit === constants.units.millimeters.variable){
             updatedValue = Number(target.value);
+            console.log(updatedValue, " <--- updated value", updatedElemId, " <--- updated elem ID");
         } else if(calculatorState.inputs[name.variable as keyof Inputs].unit === constants.units.inches.variable){
             updatedValue = Number(target.value) * constants.units.millimeters.multiplier;
+            console.log(updatedValue, " <--- updated value", updatedElemId, " <--- updated elem ID");
         }
 
         const calculatorPayload: CalculatorPayload = {
@@ -55,7 +58,7 @@ export default function Input({name}: InputProps){
             <div style={{display: "flex", justifyContent: "space-between", width:"100%", margin: "0 auto"}}> 
                 
                 <input style={inputsStyles} type="number" pattern="/d*" inputMode="decimal" id={name.variable} 
-                    onInput={(e) => newHandleChange(e)}
+                    onInput={(e) => handleChange(e)}
                     //    onBlur={(e) => handleChange(e)}
                     value={input.value > .00001 ? input.value : ''}>
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { resultsMiniStyles, labelStyles, rowStyles } from "../../../../styles/inputAndResultsStyles";
+import { resultsMiniStyles, labelStyles, rowStyles } from "../../styles/inputAndResultsStyles";
 import { ConstantsItem } from "../../../../constants/constants";
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import {
@@ -32,7 +32,6 @@ export default function ResultsMini({name}: ResultMiniProps){
                     <Col>
 
                         <input style={resultsMiniStyles} id={name.variable} value={resultValue} readOnly={true}></input>
-                        <p>Hello:{resultValue}</p>
                     </Col>
                 </Row>
             </Col>

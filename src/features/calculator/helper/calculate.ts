@@ -8,17 +8,23 @@ export function updateInputState(updatedElemId: keyof Inputs, updatedValue: numb
     const unit: string = currentState.inputs[updatedElemId].unit;
     const millimeters = constants.units.millimeters;
     const inches = constants.units.inches
+
+    let adjustedValue: number;
     
     // must convert value for inches since values are stored in mm
     if(unit === inches.variable){
-        updatedValue = updatedValue / millimeters.multiplier;
+        adjustedValue = updatedValue / millimeters.multiplier;
+        console.log(adjustedValue, " <--- adjusted value after conversion");
+    } else {
+        adjustedValue = updatedValue;
+        console.log(adjustedValue, " <--- no unit adjusting");
     }
     let newState: CalculatorState = {
         ...currentState,
         inputs: {
             ...currentState.inputs,
             [updatedElemId]: {
-                value: updatedValue,
+                value: adjustedValue,
                 unit: unit
             }
         }
@@ -67,10 +73,21 @@ export function calculateResults(updatedCalculatorState: CalculatorState): Calcu
 
     // units are for indexing into different calculator Items, or values
     const value = "value" as keyof Item;
+    const unit = "unit" as keyof Item;
+
+    const inches: string = constants.units.inches.variable;
 
     // calculate fstop
-    function calculateFStopFromMm(diameter: Item, focalLength: Item): string{
-        const fStop = Number(focalLength[value])/ Number(diameter[value])
+    function calculateFStop(diameter: Item, focalLength: Item): string{
+       
+        // adjusting units 
+        let adjustedDiameter: number;
+        let adjustedFocalLength: number;
+
+        adjustedDiameter = diameter[unit] === inches ? diameter.value / constants.units.inches.multiplier : diameter.value;
+        adjustedFocalLength = focalLength[unit] === inches ? focalLength.value / constants.units.inches.multiplier : focalLength.value;
+
+        const fStop: number = Number(adjustedFocalLength)/ Number(adjustedDiameter);
         const formattedFStop = fStop % 1 ? fStop.toFixed(1) : fStop;
         return fStop ? "F-" + formattedFStop : ''
     }
@@ -108,7 +125,7 @@ export function calculateResults(updatedCalculatorState: CalculatorState): Calcu
             ...updatedCalculatorState.inputs
         },
         results: {
-            fStop: inputs.diameter.value && inputs.focalLength.value ? calculateFStopFromMm(inputs.diameter, inputs.focalLength) : '',
+            fStop: inputs.diameter.value && inputs.focalLength.value ? calculateFStop(inputs.diameter, inputs.focalLength) : '',
             angleOfView: inputs.filmDimension[value] && inputs.focalLength[value] ? calculateAngleOfViewFromMm(inputs.filmDimension, inputs.focalLength) : '',
             imageDiameter: {
             value: calculateImageDiameterFromMm(inputs.focalLength) ? calculateImageDiameterFromMm(inputs.focalLength): 0,

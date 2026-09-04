@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import ToggleContainer from "../toggles/ToggleContainer";
-import { resultsStyles, labelStyles, rowStyles } from "../../../../styles/inputAndResultsStyles";
+import { resultsStyles, labelStyles, rowStyles } from "../../styles/inputAndResultsStyles";
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import { ConstantsItem } from "../../../../constants/constants";
 

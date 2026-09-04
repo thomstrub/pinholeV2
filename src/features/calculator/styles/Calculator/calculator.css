@@ -1,0 +1,46 @@
+.basicBoxStyles {
+    color: "#3E3D3D";
+    font-family: "Karla";
+    font-size: "32px";
+    border: "1px solid #cccccc";
+    border-radius: "6px";
+    /* // boxSizing: "border-box"; */
+    margin-bottom:"14px";
+    padding-left:"12px";
+    display: "flex";
+    align-items: "center";
+}
+
+.inputWrapper {
+    display: "flex";
+    justify-content: "space-between";
+    width:"100%"; 
+    margin: "0 auto";
+}
+
+.inputsStyles {
+    height: "60px";
+    width: "200px";
+    
+}
+
+.resultsStyles {
+    background: "#ECECEC"
+}
+
+.resultsMiniStyles {
+    background: "#ECECEC";
+    height: "60px";
+    width: "160px"     
+}
+
+.labelStyles {
+    color: "#555B6F";
+    line-height: "20px"
+}
+
+.rowStyles {
+    margin-top:"12px";
+    
+}
+
